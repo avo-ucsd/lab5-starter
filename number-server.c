@@ -14,7 +14,7 @@ void handle_404(int client_sock, char *path)  {
 
     // TODO: send response back to client?
     write(client_sock, HTTP_404_NOT_FOUND, sizeof(HTTP_404_NOT_FOUND));
-    write(client_sock, HTTP_404_MESSAGE, sizeof(HTTP_404_MESSAGE));
+    write(client_sock, response_buff, strlen(response_buff));
 }
 
 char const HTTP_200_SUCCESS[] = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n";
@@ -37,7 +37,7 @@ void handle_response(char *request, int client_sock) {
         return;
     }
 
-    if (strstr(request, "/shownum"))
+    if (strstr(request, "/shownum") || strcmp(path, "/") == 0)
     {
 	    handle_200(client_sock);
 
